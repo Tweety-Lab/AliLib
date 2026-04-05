@@ -11,17 +11,11 @@ public class MyScript : ThunderScript
     public static AudioClip? MyClip { get; set; }
 
     /// <inheritdoc />
-    public override void ScriptEnable()
-    {
-        base.ScriptEnable();
-    }
-
-    /// <inheritdoc />
     public override void ScriptUpdate()
     {
         base.ScriptUpdate();
 
-        if (MyClip != null)
+        if (MyClip != null && Platform.IsPCVR)
         {
             Debug.Log($"[AliLib] {MyClip.length}");
         }
