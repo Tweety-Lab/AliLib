@@ -3,13 +3,18 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	<LangVersion>latest</LangVersion>
+	<Nullable>enable</Nullable>
   </PropertyGroup>
 
 	<Target Name="PostBuildCopy" AfterTargets="Build">
-		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ProjectDir)..\..\Mods\AliLib" />
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ProjectDir)..\..\Mods\AliLibTest" />
 	</Target>
 
-	<ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AliLib.Core\AliLib.Core.csproj" />
+  </ItemGroup>
+
+		<ItemGroup>
 		<Reference Include="ThunderRoad">
 			<HintPath>..\..\..\Managed\ThunderRoad.dll</HintPath>
 		</Reference>
@@ -21,6 +26,9 @@
 		<Reference Include="UnityEngine.CoreModule">
 			<HintPath>..\..\..\Managed\UnityEngine.CoreModule.dll</HintPath>
 		</Reference>
-	</ItemGroup>
 
+			<Reference Include="UnityEngine.AudioModule">
+				<HintPath>..\..\..\Managed\UnityEngine.AudioModule.dll</HintPath>
+			</Reference>
+	</ItemGroup>
 </Project>
