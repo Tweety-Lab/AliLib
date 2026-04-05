@@ -10,6 +10,9 @@ public class MyScript : ThunderScript
     [Addressable("ProjectionSorcery.GlassSpawn")]
     public static AudioClip? MyClip { get; set; }
 
+    [ExportedString("Test/MyText.txt")]
+    public const string MyAsset = "Hello, World!";
+
     /// <inheritdoc />
     public override void ScriptUpdate()
     {

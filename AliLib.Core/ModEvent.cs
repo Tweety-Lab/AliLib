@@ -15,13 +15,13 @@ public class ModEvent<T>
     // A linked list has a slight performance advantage over a list since we only ever access sequentially
     private readonly LinkedList<Action<T>> actions = new LinkedList<Action<T>>();
 
-    /// <summary> Adds an <see cref="Action"/> to the start of the list. </summary>
+    /// <summary> Adds an <see cref="Action"/> to the start of the execution list. </summary>
     public void AddFirst(Action<T> action) => actions.AddFirst(action);
 
-    /// <summary> Adds an <see cref="Action"/> to the end of the list. </summary>
+    /// <summary> Adds an <see cref="Action"/> to the end of the execution list. </summary>
     public void AddLast(Action<T> action) => actions.AddLast(action);
 
-    /// <summary> Removes an <see cref="Action"/> from the list. </summary>
+    /// <summary> Removes an <see cref="Action"/> from the execution list. </summary>
     public void Remove(Action<T> action) => actions.Remove(action);
 
     public void Invoke(T arg)

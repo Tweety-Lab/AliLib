@@ -50,5 +50,4 @@ namespace AliLib.Analyzer.DiagnosticRules
                 context.ReportDiagnostic(Diagnostic.Create(Rule, property.GetLocation(), symbol.Name));
         }
     }
-
 }

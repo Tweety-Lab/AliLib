@@ -6,6 +6,11 @@
 	<Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<!-- Custom AliLib Properties -->
+	<PropertyGroup>
+		<ModName>AliLibTest</ModName>
+	</PropertyGroup>
+
 	<Target Name="PostBuildCopy" AfterTargets="Build">
 		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ProjectDir)..\..\Mods\AliLibTest" />
 	</Target>
