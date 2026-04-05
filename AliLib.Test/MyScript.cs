@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using AliLib;
 using AliLib.Core;
 using ThunderRoad;
+using AliLib.Core.Assets;
 
 namespace AliLib.Test;
 

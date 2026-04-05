@@ -2,28 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using ThunderRoad;
 
-namespace AliLib.Core;
+namespace AliLib.Core.Assets;
 
 /// <summary>
-/// Marks a static property as an Addressable Asset.
+/// Utility class for Addressable Assets.
 /// </summary>
-/// <remarks>
-/// Static properties marked with this attribute will asynchronously be loaded when the SDK loads <see cref="ThunderScript"/>s. Due to the asynchronous nature of this,
-/// the property should be nullable and should be assumed to be <see langword="null"/>.
-/// </remarks>
-[AttributeUsage(AttributeTargets.Property)]
-public class AddressableAttribute : Attribute
+public static class AddressableLibrary
 {
-    /// <summary> The path to the addressable asset. </summary>
-    public string Address { get; }
-
-    /// <summary> Initializes a new instance of the <see cref="AddressableAttribute"/> class. </summary>
-    public AddressableAttribute(string address) => Address = address;
-
     /// <summary> Loads assets for all all properties marked with <see cref="AddressableAttribute"/>. </summary>
-    public static void LoadAddressableAssets()
+    public static void LoadAddressableAssetAttributes()
     {
         // This is a lot of LinQ, we could probably optimize it
         List<PropertyInfo> properties = ModManager.loadedMods
@@ -35,7 +25,7 @@ public class AddressableAttribute : Attribute
 
         foreach (PropertyInfo property in properties)
         {
-            AddressableAttribute attribute = (AddressableAttribute)property.GetCustomAttributes(typeof(AliLib.Core.AddressableAttribute), false)[0];
+            AddressableAttribute attribute = (AddressableAttribute)property.GetCustomAttributes(typeof(AddressableAttribute), false)[0];
             Type assetType = property.PropertyType;
             MethodInfo openMethod = typeof(Catalog).GetMethods(BindingFlags.Static | BindingFlags.Public)
                 .FirstOrDefault(m =>
@@ -50,7 +40,7 @@ public class AddressableAttribute : Attribute
             MethodInfo closedMethod = openMethod.MakeGenericMethod(assetType);
             MethodInfo createCallbackMethod = typeof(AddressableAttribute).GetMethod(nameof(CreateTypedCallback), BindingFlags.Static | BindingFlags.NonPublic)!.MakeGenericMethod(assetType);
             object callback = createCallbackMethod.Invoke(null, new object[] { property });
-            closedMethod.Invoke(null, new object[] { attribute.Address, callback, "LoadAddressableAssets" });
+            closedMethod.Invoke(null, new object[] { attribute.Address, callback, "AliLib.AddressableLibrary" });
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using ThunderRoad;
+﻿using AliLib.Core.Assets;
+using ThunderRoad;
 
 namespace AliLib.Core;
 
@@ -12,6 +13,6 @@ internal class CoreScript : ThunderScript
     {
         base.ScriptEnable();
 
-        AddressableAttribute.LoadAddressableAssets();
+        AddressableLibrary.LoadAddressableAssetAttributes();
     }
 }
