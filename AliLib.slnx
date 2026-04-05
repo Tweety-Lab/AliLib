@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="AliLib.Analyzer/AliLib.Analyzer.csproj" />
   <Project Path="AliLib.Core/AliLib.Core.csproj" />
   <Project Path="AliLib.Test/AliLib.Test.csproj" />
 </Solution>

@@ -10,11 +10,12 @@
 		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ProjectDir)..\..\Mods\AliLibTest" />
 	</Target>
 
-  <ItemGroup>
-    <ProjectReference Include="..\AliLib.Core\AliLib.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\AliLib.Analyzer\AliLib.Analyzer.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+		<ProjectReference Include="..\AliLib.Core\AliLib.Core.csproj" />
+	</ItemGroup>
 
-		<ItemGroup>
+	<ItemGroup>
 		<Reference Include="ThunderRoad">
 			<HintPath>..\..\..\Managed\ThunderRoad.dll</HintPath>
 		</Reference>
