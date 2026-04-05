@@ -11,7 +11,7 @@ namespace AliLib.Core;
 /// </summary>
 /// <remarks>
 /// Static properties marked with this attribute will asynchronously be loaded when the SDK loads <see cref="ThunderScript"/>s. Due to the asynchronous nature of this,
-/// the property should be nullable and should be assumed to be null.
+/// the property should be nullable and should be assumed to be <see langword="null"/>.
 /// </remarks>
 [AttributeUsage(AttributeTargets.Property)]
 public class AddressableAttribute : Attribute
@@ -25,7 +25,13 @@ public class AddressableAttribute : Attribute
     /// <summary> Loads assets for all all properties marked with <see cref="AddressableAttribute"/>. </summary>
     public static void LoadAddressableAssets()
     {
-        List<PropertyInfo> properties = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).SelectMany(t => t.GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)).Where(p => p.GetCustomAttributes(typeof(AddressableAttribute), false).Length > 0).ToList();
+        // This is a lot of LinQ, we could probably optimize it
+        List<PropertyInfo> properties = ModManager.loadedMods
+            .SelectMany(mod => mod.assemblies)
+            .SelectMany(a => a.GetTypes())
+            .SelectMany(t => t.GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
+            .Where(p => p.IsDefined(typeof(AddressableAttribute), false))
+            .ToList();
 
         foreach (PropertyInfo property in properties)
         {
