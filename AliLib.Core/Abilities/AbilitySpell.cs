@@ -9,9 +9,14 @@ namespace AliLib.Core.Abilities;
 /// </summary>
 public abstract class AbilitySpell : SpellCastCharge
 {
+    /// <summary> Called when the spell is cast. </summary>
     public ModEvent OnStartCast {  get; set; } = new ModEvent();
 
+    /// <summary> Called when the spell is stopped being casted. </summary>
     public ModEvent OnStopCast { get; set; } = new ModEvent();
+
+    /// <summary> Called when the spell is updated. </summary>
+    public ModEvent OnUpdateCast { get; set; } = new ModEvent();
 
     /// <summary> All registered <see cref="Ability"/>s. </summary>
     public IReadOnlyList<Ability> Abilities => abilities;
@@ -59,5 +64,13 @@ public abstract class AbilitySpell : SpellCastCharge
         {
             OnStopCast.Invoke();
         }
+    }
+
+    /// <inheritdoc/>
+    public override void UpdateCaster()
+    {
+        base.UpdateCaster();
+
+        OnUpdateCast.Invoke();
     }
 }

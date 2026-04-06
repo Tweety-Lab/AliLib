@@ -10,11 +10,11 @@ public class TimeStopAbility : Ability
 {
     [ModOptionNomadOnly]
     [ModOption]
-    public static bool TestNomadOption;
-    
+    public static bool TestNomadOption { get; set; }
+
     [ModOptionPCVROnly]
     [ModOption]
-    public static bool TestPCVROption;
+    public static float TestPCVROption { get; set; }
 
     /// <inheritdoc/>
     public TimeStopAbility(AbilitySpell spell) : base(spell) { }
