@@ -85,8 +85,11 @@ public class TimeStopSpell : AbilitySpell
     #endregion
 
     /// <inheritdoc />
-    public override List<Ability> Abilities { get; set; } = new()
+    public override List<Ability> RegisterAbilities()
     {
-        new TimeStopAbility()
-    };
+        return new()
+        {
+            new TimeStopAbility(this)
+        };
+    }
 }

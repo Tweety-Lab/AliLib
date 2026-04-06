@@ -5,11 +5,19 @@ namespace AliLib.Test.TimeStop;
 
 public class TimeStopAbility : Ability
 {
-    /// <inheritdoc />
-    public override void StartCast()
-    {
-        base.StartCast();
+    /// <inheritdoc/>
+    public TimeStopAbility(AbilitySpell spell) : base(spell) { }
 
-        Debug.Log("TimeStopAbility");
+    /// <inheritdoc />
+    public override void Load()
+    {
+        base.Load();
+
+        Spell.OnStartCast += StartCast;
+    }
+
+    public void StartCast()
+    {
+        Debug.Log("TimeStopAbility.StartCast");
     }
 }

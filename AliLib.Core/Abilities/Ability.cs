@@ -6,6 +6,12 @@ namespace AliLib.Core.Abilities;
 /// </summary>
 public abstract class Ability
 {
-    public virtual void StartCast() { }
-    public virtual void StopCast() { }
+    /// <summary> The owning <see cref="AbilitySpell"/>. </summary>
+    public AbilitySpell Spell { get; set; } = null!;
+
+    /// <summary> Initializes a new instance of the <see cref="Ability"/> class. </summary>
+    public Ability(AbilitySpell spell) => Spell = spell;
+
+    public virtual void Load() { }
+    public virtual void Unload() { }
 }
