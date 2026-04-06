@@ -1,7 +1,7 @@
 # AliLib
 ![Badge](https://img.shields.io/badge/Version-v0.1-orange)
 
-**AliLib** Is a [Blade & Sorcery](https://store.steampowered.com/app/629730/Blade_and_Sorcery/) Modding Library designed to promote easier, more modular scripted mods.
+**AliLib** Is a [Blade & Sorcery](https://store.steampowered.com/app/629730/Blade_and_Sorcery/) Modding Library designed to promote easier, more modular scripted mods. (specifically spells)
 
 ## AliLib.Analyzer
 A Roslyn Analyzer that handles semantic checks aswell as provides some functionality for AliLib build events.
