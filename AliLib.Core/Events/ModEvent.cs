@@ -75,6 +75,8 @@ public class ModEvent<T> : IModEvent<Action<T>>
 
             action(arg);
         }
+
+        Cancelled = false;
     }
 
     public static ModEvent<T> operator +(ModEvent<T> modEvent, Action<T> action)
