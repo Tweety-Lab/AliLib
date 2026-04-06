@@ -32,14 +32,14 @@ public const string MyAsset = "Hello, World!";
 
 ## Mod Events
 ```csharp
-public ModEvent<object> MyEvent {  get; set; } = new ModEvent<object>();
+public ModEvent MyEvent {  get; set; } = new ModEvent();
 
 /// <inheritdoc />
 public override void ScriptUpdate()
 {
   base.ScriptUpdate();
 
-  MyEvent.Invoke(null);
+  MyEvent.Invoke();
   MyEvent.Cancelled = true;
 
   if (MyClip != null && Platform.IsPCVR)
