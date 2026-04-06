@@ -4,10 +4,6 @@ using System.Linq;
 
 namespace AliLib.Core.Events;
 
-// TODO: Clean this up with inheritance
-
-
-
 /// <inheritdoc/>
 public class ModEvent : IModEvent<Action>
 {
@@ -38,6 +34,12 @@ public class ModEvent : IModEvent<Action>
 
             action();
         }
+    }
+
+    public static ModEvent operator +(ModEvent modEvent, Action action)
+    {
+        modEvent.AddLast(action);
+        return modEvent;
     }
 }
 
@@ -71,5 +73,11 @@ public class ModEvent<T> : IModEvent<Action<T>>
 
             action(arg);
         }
+    }
+
+    public static ModEvent<T> operator +(ModEvent<T> modEvent, Action<T> action)
+    {
+        modEvent.AddLast(action);
+        return modEvent;
     }
 }

@@ -21,6 +21,16 @@ public class MyScript : ThunderScript
     {
         base.ScriptUpdate();
 
+        MyEvent += () =>
+        {
+            MyEvent.Cancelled = true;
+
+            if (MyClip != null)
+            {
+                Debug.Log($"[AliLib] {MyClip.length}");
+            }
+        };
+
         MyEvent.Invoke();
         MyEvent.Cancelled = true;
 
