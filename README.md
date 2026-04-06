@@ -1,5 +1,5 @@
 # AliLib
-Blade & Sorcery Modding Library.
+**AliLib** Is a [Blade & Sorcery](https://store.steampowered.com/app/629730/Blade_and_Sorcery/) Modding Library designed to promote easier, more modular scripted mods.
 
 ## Cloning the Repo
 Due to the fact AliLib uses Blade & Sorcery assemblies the best way to work with the project is to clone it into `Bade & Sorcery/BladeAndSorcery_Data/StreamingAssets`.
