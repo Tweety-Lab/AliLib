@@ -18,6 +18,9 @@ public abstract class AbilitySpell : SpellCastCharge
 
     private List<Ability> abilities = new List<Ability>();
 
+    /// <summary> Get an <see cref="Ability"/> by type. </summary>
+    public Ability GetAbility<T>() where T : Ability => abilities.Find(a => a is T);
+
     /// <summary> Register all <see cref="Ability"/>s. </summary>
     public abstract List<Ability> RegisterAbilities();
 
