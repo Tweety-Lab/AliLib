@@ -43,6 +43,12 @@ public class ModEvent : IModEvent<Action>
         modEvent.AddLast(action);
         return modEvent;
     }
+
+    public static ModEvent operator -(ModEvent modEvent, Action action)
+    {
+        modEvent.Remove(action);
+        return modEvent;
+    }
 }
 
 /// <inheritdoc/>
@@ -82,6 +88,12 @@ public class ModEvent<T> : IModEvent<Action<T>>
     public static ModEvent<T> operator +(ModEvent<T> modEvent, Action<T> action)
     {
         modEvent.AddLast(action);
+        return modEvent;
+    }
+
+    public static ModEvent<T> operator -(ModEvent<T> modEvent, Action<T> action)
+    {
+        modEvent.Remove(action);
         return modEvent;
     }
 }
