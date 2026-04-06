@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using UnityEngine;
 
-namespace AliLib.Core;
+namespace AliLib.Core.Portability;
 
 public static class Platform
 {

@@ -1,4 +1,5 @@
 ﻿using AliLib.Core.Assets;
+using AliLib.Core.Portability;
 using System;
 using System.Linq;
 using ThunderRoad;
@@ -15,10 +16,9 @@ internal class CoreScript : ThunderScript
     {
         base.ScriptEnable();
 
-        // When static linking we dont want to run this script twice
-        if (AppDomain.CurrentDomain.GetAssemblies().Any(a => a.GetName().Name == "AliLib.Core"))
-            return;
-
         AddressableLibrary.LoadAddressableAssetAttributes();
+
+        ModOptionNomadOnlyAttribute.Setup();
+        ModOptionPCVROnlyAttribute.Setup();
     }
 }
