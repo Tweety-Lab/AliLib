@@ -2,6 +2,7 @@
 using AliLib.Core;
 using ThunderRoad;
 using AliLib.Core.Assets;
+using AliLib.Core.Events;
 
 namespace AliLib.Test;
 
@@ -13,10 +14,15 @@ public class MyScript : ThunderScript
     [ExportedString("Test/MyText.txt")]
     public const string MyAsset = "Hello, World!";
 
+    public ModEvent MyEvent {  get; set; } = new ModEvent();
+
     /// <inheritdoc />
     public override void ScriptUpdate()
     {
         base.ScriptUpdate();
+
+        MyEvent.Invoke();
+        MyEvent.Cancelled = true;
 
         if (MyClip != null && Platform.IsPCVR)
         {
