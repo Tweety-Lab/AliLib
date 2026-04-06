@@ -154,7 +154,7 @@ namespace AliLib.Analyzer
                 {
                     File.WriteAllText(fullPathNormalized, field.ConstantValue, Encoding.UTF8);
                 }
-                catch (UnauthorizedAccessException ex)
+                catch (Exception ex)
                 {
                     context.ReportDiagnostic(Diagnostic.Create(
                         new DiagnosticDescriptor(

@@ -9,6 +9,9 @@ namespace AliLib.Core;
 /// </summary>
 public class ModEvent<T>
 {
+    /// <summary> Whether the event has been cancelled. </summary>
+    public volatile bool Cancelled { get; set; } = false;
+
     /// <summary> The internal list of <see cref="Action"/> handlers. </summary>
     public IReadOnlyList<Action<T>> Actions => actions.ToList();
 
@@ -27,6 +30,11 @@ public class ModEvent<T>
     public void Invoke(T arg)
     {
         foreach (Action<T> action in actions)
+        {
+            if (Cancelled)
+                break;
+
             action(arg);
+        }
     }
 }
