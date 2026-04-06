@@ -6,27 +6,27 @@ namespace AliLib.Core.Events;
 
 // TODO: Clean this up with inheritance
 
-/// <summary>
-/// Argumentless Sequential Event that allows easier third-party event hooking.
-/// </summary>
-public class ModEvent
+
+
+/// <inheritdoc/>
+public class ModEvent : IModEvent<Action>
 {
-    /// <summary> Whether the event has been cancelled. </summary>
+    /// <inheritdoc/>
     public bool Cancelled { get; set; } = false;
 
-    /// <summary> The internal list of <see cref="Action"/> handlers. </summary>
+    /// <inheritdoc/>
     public IReadOnlyList<Action> Actions => actions.ToList();
 
     // A linked list has a slight performance advantage over a list since we only ever access sequentially
     private readonly LinkedList<Action> actions = new LinkedList<Action>();
 
-    /// <summary> Adds an <see cref="Action"/> to the start of the execution list. </summary>
+    /// <inheritdoc/>
     public void AddFirst(Action action) => actions.AddFirst(action);
 
-    /// <summary> Adds an <see cref="Action"/> to the end of the execution list. </summary>
+    /// <inheritdoc/>
     public void AddLast(Action action) => actions.AddLast(action);
 
-    /// <summary> Removes an <see cref="Action"/> from the execution list. </summary>
+    /// <inheritdoc/>
     public void Remove(Action action) => actions.Remove(action);
 
     public void Invoke()
@@ -41,27 +41,25 @@ public class ModEvent
     }
 }
 
-/// <summary>
-/// Sequential Event that allows easier third-party event hooking.
-/// </summary>
-public class ModEvent<T>
+/// <inheritdoc/>
+public class ModEvent<T> : IModEvent<Action<T>>
 {
-    /// <summary> Whether the event has been cancelled. </summary>
+    /// <inheritdoc/>
     public bool Cancelled { get; set; } = false;
 
-    /// <summary> The internal list of <see cref="Action"/> handlers. </summary>
+    /// <inheritdoc/>
     public IReadOnlyList<Action<T>> Actions => actions.ToList();
 
     // A linked list has a slight performance advantage over a list since we only ever access sequentially
     private readonly LinkedList<Action<T>> actions = new LinkedList<Action<T>>();
 
-    /// <summary> Adds an <see cref="Action"/> to the start of the execution list. </summary>
+    /// <inheritdoc/>
     public void AddFirst(Action<T> action) => actions.AddFirst(action);
 
-    /// <summary> Adds an <see cref="Action"/> to the end of the execution list. </summary>
+    /// <inheritdoc/>
     public void AddLast(Action<T> action) => actions.AddLast(action);
 
-    /// <summary> Removes an <see cref="Action"/> from the execution list. </summary>
+    /// <inheritdoc/>
     public void Remove(Action<T> action) => actions.Remove(action);
 
     public void Invoke(T arg)
