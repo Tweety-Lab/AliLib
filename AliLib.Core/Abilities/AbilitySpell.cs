@@ -37,10 +37,10 @@ public abstract class AbilitySpell : SpellCastCharge
     {
         base.Unload();
 
-        abilities.Clear();
-
         foreach (var ability in Abilities)
             ability.Unload();
+
+        abilities.Clear();
     }
 
     /// <inheritdoc/>
