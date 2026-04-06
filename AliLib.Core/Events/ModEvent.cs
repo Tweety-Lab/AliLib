@@ -34,6 +34,8 @@ public class ModEvent : IModEvent<Action>
 
             action();
         }
+
+        Cancelled = false;
     }
 
     public static ModEvent operator +(ModEvent modEvent, Action action)

@@ -14,10 +14,18 @@ public class TimeStopAbility : Ability
         base.Load();
 
         Spell.OnStartCast += StartCast;
+        Spell.OnStartCast += StartCast2;
     }
 
     public void StartCast()
     {
         Debug.Log("TimeStopAbility.StartCast");
+
+        Spell.OnStartCast.Cancelled = true;
+    }
+
+    public void StartCast2()
+    {
+        Debug.Log("TimeStopAbility.StartCast2");
     }
 }
