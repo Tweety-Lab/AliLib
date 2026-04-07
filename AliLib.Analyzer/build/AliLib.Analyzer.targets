@@ -2,15 +2,18 @@
 	<PropertyGroup>
 		<AliLibLinkage Condition="'$(AliLibLinkage)' == ''">dynamic</AliLibLinkage>
 	</PropertyGroup>
-	
-  <Target Name="PostBuildCopy" AfterTargets="Build">
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModPath)" />
 
-	  <Copy
-		SourceFiles="@(ReferenceCopyLocalPaths->'%(FullPath)')"
-		DestinationFolder="$(ModPath)"
-		Condition="'$(AliLibLinkage)' == 'dynamic' AND '%(ReferenceCopyLocalPaths.Filename)%(ReferenceCopyLocalPaths.Extension)' == 'AliLib.Core.dll'" />
-  </Target>
+	<Target Name="PostBuildCopy" AfterTargets="Build">
+		<Message Text="Copying main output: $(TargetPath) to $(ModPath)" Importance="High" />
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModPath)" />
+
+		<ItemGroup>
+			<AliLibCoreDll Include="@(ReferenceCopyLocalPaths)" Condition="'$(AliLibLinkage)' == 'dynamic' AND '%(Filename)%(Extension)' == 'AliLib.Core.dll'" />
+		</ItemGroup>
+
+		<Message Text="Copying AliLib.Core.dll: %(AliLibCoreDll.FullPath) to $(ModPath)" Importance="High" Condition="@(AliLibCoreDll->Count()) != 0" />
+		<Copy SourceFiles="@(AliLibCoreDll)" DestinationFolder="$(ModPath)" Condition="@(AliLibCoreDll->Count()) != 0" />
+	</Target>
 
   <Target Name="NormalizeModPath" BeforeTargets="BeforeBuild">
 	<PropertyGroup>

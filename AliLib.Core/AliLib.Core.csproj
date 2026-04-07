@@ -16,10 +16,6 @@
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
-	<Target Name="PostBuildCopy" AfterTargets="Build">
-		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ProjectDir)..\..\Mods\AliLib" />
-	</Target>
-
 	<ItemGroup>
 	  <None Include="..\icon.png">
 	    <Pack>True</Pack>

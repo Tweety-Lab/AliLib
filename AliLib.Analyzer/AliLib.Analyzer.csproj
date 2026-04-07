@@ -4,7 +4,7 @@
 	  <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
 	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	  <Title>AliLib.Analyzer</Title>
-	  <Version>0.2</Version>
+	  <Version>0.2.2</Version>
 	  <Authors>Allieum256</Authors>
 	  <Description>A Blade &amp; Sorcery Modding Library designed to promote easier, more modular scripted mods.</Description>
 	  <RepositoryUrl>https://github.com/Tweety-Lab/AliLib</RepositoryUrl>
@@ -14,6 +14,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AliLib.Core" Version="0.2.0" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.3.0" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="5.3.0" PrivateAssets="all" />
 	</ItemGroup>
@@ -23,10 +24,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="$(OutputPath)\$(AssemblyName).dll"
-			  Pack="true"
-			  PackagePath="analyzers/dotnet/cs"
-			  Visible="false" />
+		<None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 	</ItemGroup>
 
 
