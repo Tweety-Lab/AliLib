@@ -1,0 +1,5 @@
+<Project>
+  <Target Name="PostBuildCopy" AfterTargets="Build">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ProjectDir)..\..\Mods\$(ModName)" />
+  </Target>
+</Project>

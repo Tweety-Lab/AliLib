@@ -1,5 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+	<!-- Import NuGet targets. You won't need to do this if you're using the NuGet package. -->
+	<Import Project="..\AliLib.Analyzer\build\AliLib.Analyzer.targets" />
+
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	<LangVersion>latest</LangVersion>
@@ -10,10 +13,6 @@
 	<PropertyGroup>
 		<ModName>AliLibTest</ModName>
 	</PropertyGroup>
-
-	<Target Name="PostBuildCopy" AfterTargets="Build">
-		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ProjectDir)..\..\Mods\AliLibTest" />
-	</Target>
 
 	<ItemGroup>
 		<ProjectReference Include="..\AliLib.Analyzer\AliLib.Analyzer.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />

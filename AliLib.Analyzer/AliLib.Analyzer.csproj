@@ -11,7 +11,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\AliLib.Core\AliLib.Core.csproj"/>
+		<ProjectReference Include="..\AliLib.Core\AliLib.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="build\AliLib.Analyzer.targets" Pack="true" PackagePath="build\" />
 	</ItemGroup>
 
 </Project>
