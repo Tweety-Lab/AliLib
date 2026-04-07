@@ -15,7 +15,7 @@ The core library for AliLib, all of the non-build related content lives here.
 An example mod built using AliLib.
 
 ## Cloning the Repo
-Due to the fact AliLib uses Blade & Sorcery assemblies the best way to work with the project is to clone it into `Bade & Sorcery/BladeAndSorcery_Data/StreamingAssets`.
+Due to the fact AliLib uses Blade & Sorcery assemblies the best way to work with the project is to clone it into `Blade & Sorcery/BladeAndSorcery_Data/StreamingAssets`.
 
 # Features
 For a full list of features, check the [Wiki](https://github.com/Tweety-Lab/AliLib/wiki/Features).
