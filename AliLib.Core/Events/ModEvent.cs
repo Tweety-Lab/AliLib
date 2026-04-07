@@ -11,23 +11,23 @@ public class ModEvent : IModEvent<Action>
     public bool Cancelled { get; set; } = false;
 
     /// <inheritdoc/>
-    public IReadOnlyList<Action> Actions => actions.ToList();
+    public IReadOnlyList<Action> Actions => delegateChain.ToList();
 
     // A linked list has a slight performance advantage over a list since we only ever access sequentially
-    private readonly LinkedList<Action> actions = new LinkedList<Action>();
+    private readonly LinkedList<Action> delegateChain = new LinkedList<Action>();
 
     /// <inheritdoc/>
-    public void AddFirst(Action action) => actions.AddFirst(action);
+    public void AddFirst(Action action) => delegateChain.AddFirst(action);
 
     /// <inheritdoc/>
-    public void AddLast(Action action) => actions.AddLast(action);
+    public void AddLast(Action action) => delegateChain.AddLast(action);
 
     /// <inheritdoc/>
-    public void Remove(Action action) => actions.Remove(action);
+    public void Remove(Action action) => delegateChain.Remove(action);
 
     public void Invoke()
     {
-        foreach (Action action in actions)
+        foreach (Action action in delegateChain)
         {
             if (Cancelled)
                 break;
@@ -58,23 +58,23 @@ public class ModEvent<T> : IModEvent<Action<T>>
     public bool Cancelled { get; set; } = false;
 
     /// <inheritdoc/>
-    public IReadOnlyList<Action<T>> Actions => actions.ToList();
+    public IReadOnlyList<Action<T>> Actions => delegateChain.ToList();
 
     // A linked list has a slight performance advantage over a list since we only ever access sequentially
-    private readonly LinkedList<Action<T>> actions = new LinkedList<Action<T>>();
+    private readonly LinkedList<Action<T>> delegateChain = new LinkedList<Action<T>>();
 
     /// <inheritdoc/>
-    public void AddFirst(Action<T> action) => actions.AddFirst(action);
+    public void AddFirst(Action<T> action) => delegateChain.AddFirst(action);
 
     /// <inheritdoc/>
-    public void AddLast(Action<T> action) => actions.AddLast(action);
+    public void AddLast(Action<T> action) => delegateChain.AddLast(action);
 
     /// <inheritdoc/>
-    public void Remove(Action<T> action) => actions.Remove(action);
+    public void Remove(Action<T> action) => delegateChain.Remove(action);
 
     public void Invoke(T arg)
     {
-        foreach (Action<T> action in actions)
+        foreach (Action<T> action in delegateChain)
         {
             if (Cancelled)
                 break;
