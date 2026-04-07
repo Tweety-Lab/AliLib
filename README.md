@@ -18,6 +18,14 @@ Due to the fact AliLib uses Blade & Sorcery assemblies the best way to work with
 # Features
 For a full list of features, check the [Wiki](https://github.com/Tweety-Lab/AliLib/wiki/Features).
 
+## MSBuild Integration
+```xml
+<!-- Custom AliLib Properties -->
+<PropertyGroup>
+  <ModPath>$(ProjectDir)..\..\Mods\AliLibTest</ModPath>
+</PropertyGroup>
+```
+
 ## Easier Addressables
 ```csharp
 [Addressable("ProjectionSorcery.GlassSpawn")]
