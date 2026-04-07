@@ -8,7 +8,7 @@
 		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModPath)" />
 
 		<ItemGroup>
-			<AliLibCoreDll Include="@(ReferenceCopyLocalPaths)" Condition="'$(AliLibLinkage)' == 'dynamic' AND '%(Filename)%(Extension)' == 'AliLib.Core.dll'" />
+			<AliLibCoreDll Include="$(NuGetPackageRoot)AliLib.Core\**\AliLib.Core.dll" Condition="'$(AliLibLinkage)' == 'dynamic'" />
 		</ItemGroup>
 
 		<Message Text="Copying AliLib.Core.dll: %(AliLibCoreDll.FullPath) to $(ModPath)" Importance="High" Condition="@(AliLibCoreDll->Count()) != 0" />
