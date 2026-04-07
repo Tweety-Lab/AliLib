@@ -1,6 +1,11 @@
 <Project>
   <Target Name="PostBuildCopy" AfterTargets="Build">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModPath)" />
+
+	  <Copy
+		SourceFiles="@(ReferenceCopyLocalPaths->'%(FullPath)')"
+		DestinationFolder="$(ModPath)"
+		Condition="'$(AliLibLinkage)' == 'dynamic' AND '%(ReferenceCopyLocalPaths.Filename)%(ReferenceCopyLocalPaths.Extension)' == 'AliLib.Core.dll'" />
   </Target>
 
   <Target Name="NormalizeModPath" BeforeTargets="BeforeBuild">

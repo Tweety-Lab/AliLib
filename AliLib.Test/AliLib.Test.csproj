@@ -12,6 +12,7 @@
 	<!-- Custom AliLib Properties -->
 	<PropertyGroup>
 		<ModPath>$(ProjectDir)..\..\Mods\AliLibTest</ModPath>
+		<AliLibLinkage>dynamic</AliLibLinkage>
 	</PropertyGroup>
 
 	<ItemGroup>
