@@ -15,6 +15,10 @@
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
+	<ItemGroup Condition="'$(Configuration)' == 'Release'">
+		<PackageReference Include="AliLib.Analyzer" Version="0.1.0" />
+	</ItemGroup>
+
 	<Target Name="PostBuildCopy" AfterTargets="Build">
 		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ProjectDir)..\..\Mods\AliLib" />
 	</Target>
