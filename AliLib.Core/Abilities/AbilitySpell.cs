@@ -9,8 +9,11 @@ namespace AliLib.Core.Abilities;
 /// </summary>
 public abstract class AbilitySpell : SpellCastCharge
 {
+    /// <summary> Called when a spell is loaded. </summary>
+    public static ModEvent<AbilitySpell> OnAbilitySpellLoad { get; set; } = new ModEvent<AbilitySpell>();
+
     /// <summary> Called when the spell is cast. </summary>
-    public ModEvent OnStartCast {  get; set; } = new ModEvent();
+    public ModEvent OnStartCast { get; set; } = new ModEvent();
 
     /// <summary> Called when the spell is stopped being casted. </summary>
     public ModEvent OnStopCast { get; set; } = new ModEvent();
@@ -33,6 +36,8 @@ public abstract class AbilitySpell : SpellCastCharge
     public override void Load(SpellCaster spellCaster)
     {
         base.Load(spellCaster);
+
+        OnAbilitySpellLoad.Invoke(this);
 
         abilities.AddRange(RegisterAbilities());
 
