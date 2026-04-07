@@ -3,6 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	  <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <Title>AliLib.Analyzer</Title>
+	  <Version>0.1</Version>
+	  <Authors>Allieum256</Authors>
+	  <Description>A Blade &amp; Sorcery Modding Library designed to promote easier, more modular scripted mods.</Description>
+	  <RepositoryUrl>https://github.com/Tweety-Lab/AliLib</RepositoryUrl>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <PackageLicenseFile>LICENSE</PackageLicenseFile>
+	  <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
 	<ItemGroup>
@@ -11,10 +20,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\AliLib.Core\AliLib.Core.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
+		<None Include="..\icon.png">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\LICENSE">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\README.md">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
 		<None Include="build\AliLib.Analyzer.targets" Pack="true" PackagePath="build\" />
 	</ItemGroup>
 
