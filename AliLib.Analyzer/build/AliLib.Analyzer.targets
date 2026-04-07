@@ -1,4 +1,8 @@
 <Project>
+	<PropertyGroup>
+		<AliLibLinkage Condition="'$(AliLibLinkage)' == ''">dynamic</AliLibLinkage>
+	</PropertyGroup>
+	
   <Target Name="PostBuildCopy" AfterTargets="Build">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModPath)" />
 
