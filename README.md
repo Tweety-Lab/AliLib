@@ -1,5 +1,5 @@
 # AliLib
-![Badge](https://img.shields.io/badge/Version-v0.1-orange)
+![Badge](https://img.shields.io/badge/Version-v0.2-orange)
 
 **AliLib** Is a [Blade & Sorcery](https://store.steampowered.com/app/629730/Blade_and_Sorcery/) Modding Library designed to promote easier, more modular scripted mods. (specifically spells)
 
