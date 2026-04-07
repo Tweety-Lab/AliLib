@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
 	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	  <Title>AliLib.Core</Title>
-	  <Version>0.1.1</Version>
+	  <Version>0.2</Version>
 	  <Authors>Allieum256</Authors>
 	  <Description>A Blade &amp; Sorcery Modding Library designed to promote easier, more modular scripted mods.</Description>
 	  <RepositoryUrl>https://github.com/Tweety-Lab/AliLib</RepositoryUrl>
@@ -13,6 +13,7 @@
 	<PackageIcon>icon.png</PackageIcon>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
 	<Target Name="PostBuildCopy" AfterTargets="Build">
