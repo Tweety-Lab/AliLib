@@ -3,6 +3,8 @@
 
 **AliLib** Is a [Blade & Sorcery](https://store.steampowered.com/app/629730/Blade_and_Sorcery/) Modding Library designed to promote easier, more modular scripted mods. (specifically spells)
 
+Want to use AliLib? Check out the [Wiki!](https://github.com/Tweety-Lab/AliLib/wiki/)
+
 ## AliLib.Analyzer
 A Roslyn Analyzer that handles semantic checks aswell as provides some functionality for AliLib build events.
 
