@@ -24,40 +24,11 @@ namespace AliLib.Analyzer
         /// <inheritdoc/>
         public void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            // TODO: Better way to get project dir without changing .csproj?
-            IncrementalValueProvider<string> projectDir = context.CompilationProvider
-                .Select((compilation, _) =>
+            IncrementalValueProvider<string> modPath = context.AnalyzerConfigOptionsProvider
+                .Select((options, _) =>
                 {
-                    string commonPath = null;
-
-                    foreach (SyntaxTree tree in compilation.SyntaxTrees)
-                    {
-                        string filePath = tree.FilePath;
-                        if (string.IsNullOrEmpty(filePath))
-                            continue;
-
-                        string dir = Path.GetDirectoryName(filePath);
-                        if (dir == null)
-                            continue;
-
-                        if (commonPath == null)
-                        {
-                            commonPath = dir;
-                            continue;
-                        }
-
-                        while (!dir.StartsWith(commonPath, StringComparison.OrdinalIgnoreCase))
-                        {
-                            commonPath = Path.GetDirectoryName(commonPath);
-                            if (commonPath == null)
-                                return null;
-                        }
-                    }
-
-                    if (commonPath != null && !commonPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
-                        commonPath += Path.DirectorySeparatorChar;
-
-                    return commonPath;
+                    options.GlobalOptions.TryGetValue("build_property.ModPath", out string value);
+                    return value;
                 });
 
             IncrementalValuesProvider<ExportedStringInfo?> exportedFields = context.SyntaxProvider
@@ -68,7 +39,7 @@ namespace AliLib.Analyzer
 
             IncrementalValuesProvider<ExportedStringInfo> nonNullFields = exportedFields.Where(info => info.HasValue).Select((info, _) => info.Value);
 
-            context.RegisterSourceOutput(projectDir.Combine(nonNullFields.Collect()), RunLogic);
+            context.RegisterSourceOutput(modPath.Combine(nonNullFields.Collect()), RunLogic);
         }
 
         private static bool IsConstantStringField(SyntaxNode node, CancellationToken ct)
@@ -133,10 +104,10 @@ namespace AliLib.Analyzer
 
         private static void RunLogic(SourceProductionContext context, (string Left, ImmutableArray<ExportedStringInfo> Right) input)
         {
-            string projectDir = input.Left;
+            string modPath = input.Left;
             ImmutableArray<ExportedStringInfo> fields = input.Right;
 
-            if (projectDir == null || fields.IsEmpty)
+            if (modPath == null || fields.IsEmpty)
                 return;
 
             foreach (ExportedStringInfo field in fields)
@@ -144,29 +115,24 @@ namespace AliLib.Analyzer
 #pragma warning disable RS1035 // Do not use APIs banned for analyzers
                 string normalizedExportPath = field.ExportPath.Replace('/', Path.DirectorySeparatorChar);
 
-                string fullPathNormalized = Path.GetFullPath(Path.Combine(projectDir, normalizedExportPath));
+                string fullPath = Path.Combine(modPath, normalizedExportPath);
 
-                string parentDir = Path.GetDirectoryName(fullPathNormalized);
+                string parentDir = Path.GetDirectoryName(fullPath);
                 if (parentDir != null && !Directory.Exists(parentDir))
                     Directory.CreateDirectory(parentDir);
 
                 try
                 {
-                    File.WriteAllText(fullPathNormalized, field.ConstantValue, Encoding.UTF8);
+                    File.WriteAllText(fullPath, field.ConstantValue, Encoding.UTF8);
                 }
                 catch (Exception ex)
                 {
                     context.ReportDiagnostic(Diagnostic.Create(
                         new DiagnosticDescriptor(
-                            "ALI001",
-                            "Export failed",
+                            "ALI001", "Export failed",
                             "Could not write exported string to '{0}': {1}",
-                            "StringExporter",
-                            DiagnosticSeverity.Error,
-                            isEnabledByDefault: true),
-                        Location.None,
-                        fullPathNormalized,
-                        ex.Message));
+                            "StringExporter", DiagnosticSeverity.Error, true),
+                        Location.None, fullPath, ex.Message));
                 }
 #pragma warning restore RS1035 // Do not use APIs banned for analyzers
             }

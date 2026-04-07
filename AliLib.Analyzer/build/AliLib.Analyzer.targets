@@ -1,5 +1,17 @@
 <Project>
   <Target Name="PostBuildCopy" AfterTargets="Build">
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ProjectDir)..\..\Mods\$(ModName)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModPath)" />
   </Target>
+
+  <Target Name="NormalizeModPath" BeforeTargets="BeforeBuild">
+	<PropertyGroup>
+	  <ModPath>$([MSBuild]::NormalizePath('$(MSBuildProjectDirectory)', '$(ModPath)'))</ModPath>
+	</PropertyGroup>
+  </Target>
+
+
+ <!-- TODO: Do we need this? -->
+  <ItemGroup>
+	<CompilerVisibleProperty Include="ModPath" />
+  </ItemGroup>
 </Project>

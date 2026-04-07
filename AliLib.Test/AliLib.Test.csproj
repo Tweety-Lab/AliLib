@@ -11,7 +11,7 @@
 
 	<!-- Custom AliLib Properties -->
 	<PropertyGroup>
-		<ModName>AliLibTest</ModName>
+		<ModPath>$(ProjectDir)..\..\Mods\AliLibTest</ModPath>
 	</PropertyGroup>
 
 	<ItemGroup>
