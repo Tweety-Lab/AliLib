@@ -25,6 +25,9 @@ public class CoroutineRunner : MonoBehaviour
         }
     }
 
+    /// <summary> Plays an <see cref="Action"/> after a <see cref="float"/> delay using <see cref="Coroutine"/>s. </summary>
+    public void PlayAfterDelay(Action action, float delay) => StartCoroutine(PlayAfterDelayRoutine(action, delay));
+
     /// <summary> Plays an <see cref="Action"/> smoothly using <see cref="Coroutine"/>s. </summary>
     public void PlaySmooth(Action<float> action, float duration, float delay = 0f, AnimationCurve? curve = null, Action? onComplete = null)
     {
@@ -50,5 +53,11 @@ public class CoroutineRunner : MonoBehaviour
 
         action(curve.Evaluate(1f)); // Safety net
         onComplete?.Invoke();
+    }
+
+    private IEnumerator PlayAfterDelayRoutine(Action action, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        action();
     }
 }
