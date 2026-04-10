@@ -30,7 +30,6 @@ public class CoroutineRunner : MonoBehaviour
     {
         curve ??= AnimationCurve.Linear(0f, 0f, 1f, 1f);
         StartCoroutine(PlaySmoothRoutine(action, duration, delay, curve, onComplete));
-
     }
 
     private IEnumerator PlaySmoothRoutine(Action<float> action, float duration, float delay, AnimationCurve curve, Action? onComplete)

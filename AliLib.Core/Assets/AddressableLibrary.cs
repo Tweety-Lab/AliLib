@@ -38,7 +38,7 @@ public static class AddressableLibrary
                 );
 
             MethodInfo closedMethod = openMethod.MakeGenericMethod(assetType);
-            MethodInfo createCallbackMethod = typeof(AddressableAttribute).GetMethod(nameof(CreateTypedCallback), BindingFlags.Static | BindingFlags.NonPublic)!.MakeGenericMethod(assetType);
+            MethodInfo createCallbackMethod = typeof(AddressableLibrary).GetMethod(nameof(CreateTypedCallback), BindingFlags.Static | BindingFlags.NonPublic)!.MakeGenericMethod(assetType);
             object callback = createCallbackMethod.Invoke(null, new object[] { property });
             closedMethod.Invoke(null, new object[] { attribute.Address, callback, "AliLib.AddressableLibrary" });
         }
