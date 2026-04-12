@@ -11,9 +11,6 @@ A Roslyn Analyzer that handles semantic checks aswell as provides some functiona
 ## AliLib.Core
 The core library for AliLib, all of the non-build related content lives here.
 
-## AliLib.Test
-An example mod built using AliLib.
-
 ## Cloning the Repo
 Due to the fact AliLib uses Blade & Sorcery assemblies the best way to work with the project is to clone it into `Blade & Sorcery/BladeAndSorcery_Data/StreamingAssets`.
 
