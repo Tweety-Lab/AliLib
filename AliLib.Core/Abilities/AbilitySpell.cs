@@ -1,4 +1,5 @@
 ﻿using AliLib.Core.Events;
+using AliLib.Core.GC;
 using System.Collections.Generic;
 using ThunderRoad;
 
@@ -42,7 +43,7 @@ public abstract class AbilitySpell : SpellCastCharge
         abilities.AddRange(RegisterAbilities());
 
         foreach (var ability in Abilities)
-            ability.Load();
+            ability.InternalLoad();
     }
 
     /// <inheritdoc/>
@@ -62,13 +63,9 @@ public abstract class AbilitySpell : SpellCastCharge
         base.Fire(active);
 
         if (active)
-        {
             OnStartCast.Invoke();
-        }
         else
-        {
             OnStopCast.Invoke();
-        }
     }
 
     /// <inheritdoc/>
