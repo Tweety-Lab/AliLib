@@ -1,7 +1,9 @@
 ﻿
 using AliLib.Core.Abilities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 
 namespace AliLib.Core.GC;
 
@@ -15,16 +17,59 @@ namespace AliLib.Core.GC;
 public static class AliGC
 {
     [ThreadStatic]
-    internal static ManagedOwner? Current;
+    private static Stack<(string contextKey, ManagedOwner owner)>? contexts = new();
+
+    /// <summary> The current <see cref="ManagedOwner"/> <see cref="SmartObject{T}"/>s will register with or null if none. </summary>
+    public static ManagedOwner? CurrentOwner => contexts?.Count > 0 ? contexts.Peek().owner : null;
+
+    /// <summary> The current <see cref="ManagedOwner"/> context key <see cref="SmartObject{T}"/>s will register with or null if none. </summary>
+    public static string? CurrentContext => contexts?.Count > 0 ? contexts.Peek().contextKey : null;
+
+    /// <summary> Pushes a new <see cref="ManagedOwner"/> context. </summary>
+    public static IDisposable PushContext(string contextKey, ManagedOwner owner)
+    {
+        contexts?.Push((contextKey, owner));
+        return new ContextScope();
+    }
+
+    /// <summary> Pops the current <see cref="ManagedOwner"/> context. </summary>
+    public static void PopContext() => contexts?.Pop();
+
+    /// <summary> Helper class that allows for <see cref="PushContext(string, ManagedOwner)"/> to be used as a <see cref="IDisposable"/>. </summary>
+    public sealed class ContextScope : IDisposable
+    {
+        public void Dispose() => PopContext();
+    }
 
     public class ManagedOwner
     {
-        public Queue<ISmartObject> DisposalQueue { get; private set; } = new();
+        private readonly Dictionary<string, Queue<ISmartObject>> queues = new();
 
-        public void DisposeQueue()
+        public Queue<ISmartObject> GetQueue(string contextKey)
         {
-            while (DisposalQueue.Count > 0)
-                DisposalQueue.Dequeue().Dispose();
+            if (!queues.TryGetValue(contextKey, out var q))
+                queues[contextKey] = q = new Queue<ISmartObject>();
+
+            return q;
+        }
+
+        /// <summary> Dispose every object registered under <paramref name="contextKey"/>. </summary>
+        public void DisposeContext(string contextKey)
+        {
+            if (!queues.TryGetValue(contextKey, out var q))
+                return;
+
+            while (q.Count > 0)
+                q.Dequeue().Dispose();
+        }
+
+        /// <summary> Forces disposal of all queues. </summary>
+        public void DisposeAll()
+        {
+            foreach (var q in queues.Values)
+                while (q.Count > 0) q.Dequeue().Dispose();
+
+            queues.Clear();
         }
     }
 }

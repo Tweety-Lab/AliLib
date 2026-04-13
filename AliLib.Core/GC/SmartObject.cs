@@ -26,10 +26,13 @@ public class SmartObject<T> : ISmartObject where T : UnityEngine.Object
     {
         Object = obj;
 
-        if (AliGC.Current == null)
-            throw new InvalidOperationException("SmartObject<T> cannot be created outside of a GarbageCollector.CollectedType!");
+        var owner = AliGC.CurrentOwner;
+        var key = AliGC.CurrentContext;
 
-        AliGC.Current.DisposalQueue.Enqueue(this);
+        if (owner == null || key == null)
+            throw new InvalidOperationException("SmartObject<T> cannot be created outside an AliGC context. Use AliGC.PushContext() or one of the lifecycle wrappers.");
+
+        owner.GetQueue(key).Enqueue(this);
     }
 
     /// <summary> Forces disposal of the <see cref="SmartObject{T}"/>. </summary>

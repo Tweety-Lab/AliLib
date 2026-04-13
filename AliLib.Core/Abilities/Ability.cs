@@ -1,4 +1,5 @@
 ﻿using AliLib.Core.GC;
+using System;
 
 namespace AliLib.Core.Abilities;
 
@@ -13,13 +14,20 @@ public abstract class Ability : AliGC.ManagedOwner
     /// <summary> Initializes a new instance of the <see cref="Ability"/> class. </summary>
     public Ability(AbilitySpell spell) => Spell = spell;
 
+    // This is pretty fragile
     internal void InternalLoad()
     {
-        AliGC.Current = this;
+        using var _ = AliGC.PushContext("Load", this);
         Load();
-        AliGC.Current = null;
+
+        Spell.OnStartCast.AddFirst(() => AliGC.PushContext("StartCast", this));
+        Spell.OnStopCast.AddFirst(() =>
+        {
+            AliGC.PopContext();
+            DisposeContext("StartCast");
+        });
     }
 
     public virtual void Load() { }
-    public virtual void Unload() { DisposeQueue(); }
+    public virtual void Unload() { DisposeContext("Load"); }
 }
