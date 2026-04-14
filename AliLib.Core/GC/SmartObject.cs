@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AliLib.Core.Events;
+using System;
 using System.Diagnostics;
 using System.Linq;
 
@@ -22,6 +23,9 @@ public class SmartObject<T> : ISmartObject where T : UnityEngine.Object
     /// <summary> The underlying <typeparamref name="T"/> or null if already disposed. </summary>
     public T? Object { get; private set; }
 
+    /// <summary> Called before the <see cref="SmartObject{T}"/> is disposed. </summary>
+    public ModEvent OnDisposed { get; private set; } = new ModEvent();
+
     private SmartObject(T obj)
     {
         Object = obj;
@@ -38,6 +42,8 @@ public class SmartObject<T> : ISmartObject where T : UnityEngine.Object
     /// <inheritdoc/>
     public void Dispose()
     {
+        OnDisposed.Invoke();
+
         UnityEngine.Object.Destroy(Object);
         Object = null;
     }

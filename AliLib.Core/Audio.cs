@@ -65,6 +65,25 @@ public static class Audio
         GameObject.Destroy(source.gameObject);
     }
 
+    /// <summary> Fades in an <see cref="AudioSource"/> over a duration. </summary>
+    /// <param name="source">The <see cref="AudioSource"/> to fade in.</param>
+    /// <param name="duration">The duration of the fade in seconds.</param>
+    public static IEnumerator FadeIn(AudioSource source, float duration)
+    {
+        if (source == null)
+            yield break;
+
+        float startVolume = source.volume;
+        float elapsed = 0f;
+
+        while (elapsed < duration && source != null)
+        {
+            elapsed += Time.deltaTime;
+            source.volume = Mathf.Lerp(0f, startVolume, elapsed / duration);
+            yield return null;
+        }
+    }
+
     /// <summary> Fades out and destroys an <see cref="AudioSource"/> over a duration. </summary>
     /// <param name="source">The <see cref="AudioSource"/> to fade out.</param>
     /// <param name="duration">The duration of the fade in seconds.</param>
