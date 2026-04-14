@@ -35,7 +35,7 @@ public class SmartObject<T> : ISmartObject where T : UnityEngine.Object
         owner.GetQueue(key).Enqueue(this);
     }
 
-    /// <summary> Forces disposal of the <see cref="SmartObject{T}"/>. </summary>
+    /// <inheritdoc/>
     public void Dispose()
     {
         UnityEngine.Object.Destroy(Object);
