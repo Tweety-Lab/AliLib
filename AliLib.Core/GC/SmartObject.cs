@@ -24,7 +24,7 @@ public class SmartObject<T> : ISmartObject where T : UnityEngine.Object
     public T? Object { get; private set; }
 
     /// <summary> Called before the <see cref="SmartObject{T}"/> is disposed. </summary>
-    public ModEvent OnDisposed { get; private set; } = new ModEvent();
+    public ModEvent OnDisposed { get; set; } = new ModEvent();
 
     private SmartObject(T obj)
     {
