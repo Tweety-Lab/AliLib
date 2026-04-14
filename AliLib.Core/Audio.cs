@@ -1,4 +1,5 @@
 ﻿
+using System.Collections;
 using ThunderRoad;
 using UnityEngine;
 
@@ -62,5 +63,26 @@ public static class Audio
 
         source.Stop();
         GameObject.Destroy(source.gameObject);
+    }
+
+    /// <summary> Fades out and destroys an <see cref="AudioSource"/> over a duration. </summary>
+    /// <param name="source">The <see cref="AudioSource"/> to fade out.</param>
+    /// <param name="duration">The duration of the fade in seconds.</param>
+    public static IEnumerator FadeOut(AudioSource source, float duration)
+    {
+        if (source == null)
+            yield break;
+
+        float startVolume = source.volume;
+        float elapsed = 0f;
+
+        while (elapsed < duration && source != null)
+        {
+            elapsed += Time.deltaTime;
+            source.volume = Mathf.Lerp(startVolume, 0f, elapsed / duration);
+            yield return null;
+        }
+
+        Stop(source);
     }
 }
