@@ -14,6 +14,8 @@ public abstract class Ability : AliGC.ManagedOwner
     /// <summary> Initializes a new instance of the <see cref="Ability"/> class. </summary>
     public Ability(AbilitySpell spell) => Spell = spell;
 
+    internal int RefCount { get; set; } = 0;
+
     // This is pretty fragile
     internal void InternalLoad()
     {

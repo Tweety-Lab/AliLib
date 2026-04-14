@@ -40,10 +40,18 @@ public abstract class AbilitySpell : SpellCastCharge
 
         OnAbilitySpellLoad.Invoke(this);
 
-        abilities.AddRange(RegisterAbilities());
+        if (abilities.Count == 0)
+        {
+            abilities.AddRange(RegisterAbilities());
 
-        foreach (var ability in Abilities)
-            ability.InternalLoad();
+            foreach (var ability in abilities)
+            {
+                ability.RefCount++;
+
+                if (ability.RefCount == 1)
+                    ability.InternalLoad();
+            }
+        }
     }
 
     /// <inheritdoc/>
@@ -51,8 +59,16 @@ public abstract class AbilitySpell : SpellCastCharge
     {
         base.Unload();
 
-        foreach (var ability in Abilities)
-            ability.Unload();
+        foreach (var ability in abilities)
+        {
+            ability.RefCount--;
+
+            if (ability.RefCount <= 0)
+            {
+                ability.RefCount = 0;
+                ability.Unload();
+            }
+        }
 
         abilities.Clear();
     }
