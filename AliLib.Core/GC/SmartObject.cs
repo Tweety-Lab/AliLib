@@ -23,6 +23,9 @@ public class SmartObject<T> : ISmartObject where T : UnityEngine.Object
     /// <summary> The underlying <typeparamref name="T"/> or null if already disposed. </summary>
     public T? Object { get; private set; }
 
+    /// <summary> The key of the context that owns this <see cref="SmartObject{T}"/>. </summary>
+    public string ContextKey { get; private set; } = string.Empty;
+
     /// <summary> Called before the <see cref="SmartObject{T}"/> is disposed. </summary>
     public ModEvent OnDisposed { get; set; } = new ModEvent();
 
@@ -37,6 +40,8 @@ public class SmartObject<T> : ISmartObject where T : UnityEngine.Object
             throw new InvalidOperationException("SmartObject<T> cannot be created outside an AliGC context. Use AliGC.PushContext() or one of the lifecycle wrappers.");
 
         owner.GetQueue(key).Enqueue(this);
+
+        ContextKey = key;
     }
 
     /// <inheritdoc/>

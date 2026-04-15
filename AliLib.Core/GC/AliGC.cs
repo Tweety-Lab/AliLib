@@ -38,6 +38,7 @@ public static class AliGC
     /// <summary> Helper class that allows for <see cref="PushContext(string, ManagedOwner)"/> to be used as a <see cref="IDisposable"/>. </summary>
     public sealed class ContextScope : IDisposable
     {
+        /// <inheritdoc/>
         public void Dispose() => PopContext();
     }
 
