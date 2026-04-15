@@ -27,6 +27,7 @@ public class SmartObject<T> : ISmartObject where T : UnityEngine.Object
     public string ContextKey { get; private set; } = string.Empty;
 
     /// <summary> Called before the <see cref="SmartObject{T}"/> is disposed. </summary>
+    /// <remarks> This can be cancelled via <see cref="ModEvent.Cancelled"/> to bypass default disposal logic. </remarks>
     public ModEvent OnDisposed { get; set; } = new ModEvent();
 
     private SmartObject(T obj)

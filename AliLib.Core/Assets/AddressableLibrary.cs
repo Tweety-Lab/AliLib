@@ -12,6 +12,42 @@ namespace AliLib.Core.Assets;
 /// </summary>
 public static class AddressableLibrary
 {
+    public enum LoadType
+    {
+        FromCache,
+        FromCatalog
+    }
+
+    /// <summary> All cached adressables. </summary>
+    public static IReadOnlyDictionary<string, UnityEngine.Object> AssetCache => assetCache;
+
+    private static Dictionary<string, UnityEngine.Object> assetCache = new();
+
+    /// <summary> Loads an asset from the cache or loads it asynchronously into the cache. </summary>
+    /// <returns> The <see cref="LoadType"/> used to load the asset. </returns>
+    public static LoadType LoadCachedAssetAsync<T>(string address, Action<T> callback) where T : UnityEngine.Object
+    {
+        if (assetCache.TryGetValue(address, out UnityEngine.Object result))
+        {
+            callback((T)result);
+            return LoadType.FromCache;
+        }
+
+        Catalog.LoadAssetAsync<T>(address, result =>
+        {
+            assetCache[address] = result;
+            callback(result);
+        }, "AliLib.AddressableLibrary");
+
+        return LoadType.FromCatalog;
+    }
+
+    /// <summary> Removes an asset from the cache. </summary>
+    public static void RemoveCachedAsset(string address) => assetCache.Remove(address);
+
+    /// <summary> Removes all assets from the cache. </summary>
+    public static void ClearCachedAssets() => assetCache.Clear();
+
     /// <summary> Loads assets for all all properties marked with <see cref="AddressableAttribute"/>. </summary>
     public static void LoadAddressableAssetAttributes()
     {
