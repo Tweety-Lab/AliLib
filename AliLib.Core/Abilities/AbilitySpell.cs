@@ -2,6 +2,7 @@
 using AliLib.Core.GC;
 using System.Collections.Generic;
 using ThunderRoad;
+using UnityEngine;
 
 namespace AliLib.Core.Abilities;
 
@@ -38,20 +39,14 @@ public abstract class AbilitySpell : SpellCastCharge
     {
         base.Load(spellCaster);
 
-        OnAbilitySpellLoad.Invoke(this);
-
-        if (abilities.Count == 0)
+        foreach (var ability in abilities)
         {
-            abilities.AddRange(RegisterAbilities());
-
-            foreach (var ability in abilities)
-            {
-                ability.RefCount++;
-
-                if (ability.RefCount == 1)
-                    ability.InternalLoad();
-            }
+            // HACK: We have to reassign this for... reasons?? Spell getting cloned between Init() and Load() or something akin to that
+            ability.Spell = this;
+            ability.InternalEquip();
         }
+
+        OnAbilitySpellLoad.Invoke(this);
     }
 
     /// <inheritdoc/>
@@ -60,17 +55,19 @@ public abstract class AbilitySpell : SpellCastCharge
         base.Unload();
 
         foreach (var ability in abilities)
-        {
-            ability.RefCount--;
+            ability.OnUnequip();
+    }
 
-            if (ability.RefCount <= 0)
-            {
-                ability.RefCount = 0;
-                ability.Unload();
-            }
-        }
+    /// <inheritdoc/>
+    public override void Init()
+    {
+        base.Init();
 
         abilities.Clear();
+        abilities.AddRange(RegisterAbilities());
+
+        foreach (var ability in abilities)
+            ability.Init();
     }
 
     /// <inheritdoc/>
