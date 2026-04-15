@@ -47,10 +47,14 @@ public class SmartObject<T> : ISmartObject where T : UnityEngine.Object
     /// <inheritdoc/>
     public void Dispose()
     {
-        OnDisposed.Invoke();
+        // We want to allow the typical disposal pattern to be cancelled via ModEvents
+        OnDisposed += () =>
+        {
+            UnityEngine.Object.Destroy(Object);
+            Object = null;
+        };
 
-        UnityEngine.Object.Destroy(Object);
-        Object = null;
+        OnDisposed.Invoke();
     }
 
     public static implicit operator SmartObject<T>(T obj) => new SmartObject<T>(obj);
