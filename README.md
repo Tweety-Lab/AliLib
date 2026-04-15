@@ -30,6 +30,9 @@ For a full list of features, check the [Wiki](https://github.com/Tweety-Lab/AliL
 [Addressable("ProjectionSorcery.GlassSpawn")]
 public static AudioClip? MyClip { get; set; }
 ```
+```csharp
+AddressableLibrary.LoadCachedAssetAsync<Texture2D>(iconAddress, (text) => matInstance.SetTexture("_Sprite", text));
+```
 
 ## Exported Strings
 ```csharp
