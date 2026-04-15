@@ -34,6 +34,12 @@ public static AudioClip? MyClip { get; set; }
 AddressableLibrary.LoadCachedAssetAsync<Texture2D>(iconAddress, (text) => matInstance.SetTexture("_Sprite", text));
 ```
 
+## Garbage Collection
+```csharp
+// A Garbage-Collected native object (SmartObject)
+SmartObject<Material> mat = renderer.material;
+```
+
 ## Exported Strings
 ```csharp
 [ExportedString("Test/MyText.txt")]
