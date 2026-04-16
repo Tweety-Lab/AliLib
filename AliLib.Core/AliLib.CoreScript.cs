@@ -22,7 +22,7 @@ internal class CoreScript : ThunderScript
 
         AppDomain.CurrentDomain.SetData("AliLibInitialized", true);
 
-        AddressableLibrary.LoadAddressableAssetAttributes();
+        Catalog.LoadAddressableAssetAttributes();
 
         ModOptionNomadOnlyAttribute.Setup();
         ModOptionPCVROnlyAttribute.Setup();
