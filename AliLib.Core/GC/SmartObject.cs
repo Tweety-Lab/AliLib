@@ -10,7 +10,7 @@ namespace AliLib.Core.GC;
 /// </summary>
 public interface ISmartObject
 {
-    /// <summary> Forces disposal of the <see cref="SmartObject{T}"/>. </summary>
+    /// <summary> Disposes the <see cref="SmartObject{T}"/>. </summary>
     void Dispose();
 }
 
@@ -49,13 +49,16 @@ public class SmartObject<T> : ISmartObject where T : UnityEngine.Object
     public void Dispose()
     {
         // We want to allow the typical disposal pattern to be cancelled via ModEvents
-        OnDisposed += () =>
-        {
-            UnityEngine.Object.Destroy(Object);
-            Object = null;
-        };
+        OnDisposed += ForceDispose;
 
         OnDisposed.Invoke();
+    }
+
+    /// <summary> Bypasses <see cref="OnDisposed"/> and forces disposal. </summary>
+    public void ForceDispose()
+    {
+        UnityEngine.Object.Destroy(Object);
+        Object = null;
     }
 
     public static implicit operator SmartObject<T>(T obj) => new SmartObject<T>(obj);
