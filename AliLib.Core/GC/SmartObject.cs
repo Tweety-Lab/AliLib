@@ -59,5 +59,5 @@ public class SmartObject<T> : ISmartObject where T : UnityEngine.Object
     }
 
     public static implicit operator SmartObject<T>(T obj) => new SmartObject<T>(obj);
-    public static implicit operator T?(SmartObject<T> obj) => obj.Object;
+    public static implicit operator T(SmartObject<T> obj) => obj.Object;
 }
