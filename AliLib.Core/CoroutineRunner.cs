@@ -25,6 +25,9 @@ public class CoroutineRunner : MonoBehaviour
         }
     }
 
+    /// <summary> Plays an <see cref="Action"/> after waiting for a <see cref="YieldInstruction"/> using <see cref="Coroutine"/>s. </summary>
+    public Coroutine PlayAfterYield(Action action, YieldInstruction yi) => StartCoroutine(PlayAfterYieldRoutine(action, yi));
+
     /// <summary> Plays an <see cref="Action"/> after a <see cref="float"/> delay using <see cref="Coroutine"/>s. </summary>
     public Coroutine PlayAfterDelay(Action action, float delay) => StartCoroutine(PlayAfterDelayRoutine(action, delay));
 
@@ -58,6 +61,12 @@ public class CoroutineRunner : MonoBehaviour
     private IEnumerator PlayAfterDelayRoutine(Action action, float delay)
     {
         yield return new WaitForSeconds(delay);
+        action();
+    }
+
+    private IEnumerator PlayAfterYieldRoutine(Action action, YieldInstruction yi)
+    {
+        yield return yi;
         action();
     }
 }
