@@ -20,8 +20,8 @@ public interface ISmartObject
 /// <typeparam name="T">The type of <see cref="UnityEngine.Object"/>.</typeparam>
 public class SmartObject<T> : ISmartObject where T : UnityEngine.Object
 {
-    /// <summary> The underlying <typeparamref name="T"/> or null if already disposed. </summary>
-    public T? Object { get; private set; }
+    /// <summary> The underlying <typeparamref name="T"/>. </summary>
+    public T Object { get; private set; }
 
     /// <summary> The key of the context that owns this <see cref="SmartObject{T}"/>. </summary>
     public string ContextKey { get; private set; } = string.Empty;
