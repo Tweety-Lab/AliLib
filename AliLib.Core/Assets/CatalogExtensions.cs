@@ -102,7 +102,9 @@ public static class CatalogExtensions
                         if (componentAttribute == null)
                             continue;
 
-                        addressableComponents[componentAttribute.Address] ??= new();
+                        if (!addressableComponents.ContainsKey(componentAttribute.Address))
+                            addressableComponents[componentAttribute.Address] = new();
+
                         addressableComponents[componentAttribute.Address].Add(type);
                     }
                 }
