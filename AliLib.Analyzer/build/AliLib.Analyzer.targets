@@ -1,6 +1,6 @@
 <Project>
 	<PropertyGroup>
-		<AliLibLinkage Condition="'$(AliLibLinkage)' == ''">dynamic</AliLibLinkage>
+		<AliLibLinkage Condition="'$(AliLibLinkage)' == ''">none</AliLibLinkage>
 	</PropertyGroup>
 
 	<Target Name="PostBuildCopy" AfterTargets="Build">
